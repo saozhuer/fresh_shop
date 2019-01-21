@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+var num = $('#num_show_'+id).val()
+			var new_num = parseInt(num) + 1
+			$('.num_show').val(new_num)
+			var price = $('#price'+id).text()
+			var all_price = new_num*price
+			$('#col07').text(all_price)
+
+
+
+
+function checkbox(id){
+				var check = $('#checkbox'+id).prop('checked')
+				if(check){
+					var is_select = 1
+					console.log(id,is_select)
+					check_box(id,is_select)
+				}
+				else{
+					var is_select = 0
+
+					check_box(id,is_select)
+				}
+			}
+
+		function check_box(id,is_select){
+			var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+			$.ajax({
+				url:'/cart/check_box/',
+				type:'POST',
+				data:{'is_select':is_select,'id':id},
+				headers:{'X-CSRFToken':csrf},
+				dataType:'json',
+				success:function(data){
+					console.log(data)
+					<!--刷新数量和件数和总价-->
+					cart_price()
+
+				},
+				error:function(data){
+					console.log('错愕')
+				}
+			})
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
